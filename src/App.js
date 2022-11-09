@@ -29,7 +29,7 @@ class App extends React.Component {
           }}
         >
           <Button onClick={this.getImages} variant="primary" size="lg">
-            Block level button
+            Load Memes
           </Button>
         </div>
         <div
