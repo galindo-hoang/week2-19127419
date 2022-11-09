@@ -1,5 +1,8 @@
 import React from "react";
 import Meme from "./meme";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import { Pagination } from "antd";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +11,7 @@ class App extends React.Component {
     this.containerImage = React.createRef();
   }
   getImages = async () => {
-    this.setState({images: []})
+    this.setState({ images: [] });
     const response = await Meme.get("/get_memes");
     this.setState({ images: response.data.data.memes });
   };
@@ -17,13 +20,17 @@ class App extends React.Component {
     return (
       <div>
         <div
+          className="d-grid gap-2"
           style={{
+            marginTop: "20px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <button onClick={this.getImages}>Load</button>
+          <Button onClick={this.getImages} variant="primary" size="lg">
+            Block level button
+          </Button>
         </div>
         <div
           ref={this.containerImage}
@@ -34,35 +41,23 @@ class App extends React.Component {
           }}
         >
           {this.state.images.map((image) => (
-            <div
+            <Card
               style={{
-                width: "200px",
+                width: "240px",
+                height: "300px",
                 display: "inline-flex",
-                flexDirection: "column",
                 margin: "20px 10px 0px",
               }}
             >
-              <img
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  border: "1px solid black",
-                }}
-                alt={image.name}
-                key={image.id}
+              <Card.Img
+                variant="top"
                 src={image.url}
+                style={{ width: "100%", height: "200px" }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  textAlign: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {image.name}
-              </div>
-            </div>
+              <Card.Body>
+                <Card.Title>{image.name}</Card.Title>
+              </Card.Body>
+            </Card>
           ))}
         </div>
       </div>
